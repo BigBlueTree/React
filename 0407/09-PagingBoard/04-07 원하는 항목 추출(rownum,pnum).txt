@@ -1,0 +1,23 @@
+select *
+from(
+      select rownum pnum,s.*
+      from(
+        select b.* 
+        from board b
+        order by num desc
+    )s
+)
+    where pnum between 11 and 20
+;
+select *
+from(
+    select row_number() over(order by num desc) pnum
+    ,b.*
+    from board b
+    where title like '%페이징%'
+    order by num desc
+    )
+    where pnum between 11 and 20
+;
+
+
