@@ -1,0 +1,39 @@
+
+create table FILEBOARD(
+    IDX NUMBER PRIMARY KEY,
+    NAME VARCHAR2(50) NOT NULL,
+    TITLE VARCHAR2(200) NOT NULL,
+    CONTENT VARCHAR2(2000) NOT NULL,
+    POSTDATE DATE DEFAULT SYSDATE NOT NULL,
+    OFILE VARCHAR2(200),
+    NFILE VARCHAR2(100),
+    DOWNCOUNT NUMBER(5,0) NOT NULL,
+    VISITCOUNT NUMBER  NOT NULL,
+    PASS VARCHAR2(50) NOT NULL
+    );
+alter table FILEBOARD MODIFY (DOWNCOUNT DEFAULT 0);
+alter table FILEBOARD MODIFY (VISITCOUNT DEFAULT 0);
+INSERT INTO FILEBOARD(IDX,NAME,TITLE,CONTENT,PASS)
+VALUES(SEQ_BOARD_NUM.NEXTVAL,'강감찬','자료게시판','더미내용','1234');
+INSERT INTO FILEBOARD(IDX,NAME,TITLE,CONTENT,PASS)
+VALUES(SEQ_BOARD_NUM.NEXTVAL,'을지문덕','자료게시판2','더미내용2','1234');
+INSERT INTO FILEBOARD(IDX,NAME,TITLE,CONTENT,PASS)
+VALUES(SEQ_BOARD_NUM.NEXTVAL,'계백','자료게시판3','더미내용3','1234');
+COMMIT;
+select * from FILEBOARD;
+
+
+select count(*)
+from fileboard
+where title like '%자%';
+
+select * 
+from(
+    select rownum as pnum,s.*
+    from(
+        select *
+        from fileboard
+        where title like '%자%'
+        order by idx desc
+    ) s
+)where pnum between 1 and 2;
